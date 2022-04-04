@@ -1,19 +1,5 @@
 package com.example.application.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import elemental.json.JsonArray;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,25 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.*;
-import java.nio.charset.MalformedInputException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-@RestController
-public class TwitterController {
+public class Search {
     @Value("${BEARER_TOKEN}")
     private String bearerToken;
     private static HttpURLConnection connection;
 
-    @GetMapping("/tweets")
-    public String tweets() throws Exception {
+    public void searchTweet(String searchParam) throws Exception {
         BufferedReader reader;
         String line;
         StringBuilder responseContent = new StringBuilder();
 
         try {
-            URL url = new URL("https://api.twitter.com/2/tweets/search/recent?query=najib&expansions=author_id&tweet.fields=id,created_at,text,author_id&user.fields=id,created_at,name,username,profile_image_url");
+            URL url = new URL("https://api.twitter.com/2/tweets/search/recent?query="+ searchParam +"&expansions=author_id&tweet.fields=id,created_at,text,author_id&user.fields=id,created_at,name,username,profile_image_url");
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -80,8 +63,6 @@ public class TwitterController {
                 connection.disconnect();
             }
         }
-
-        return parse(responseContent.toString());
     }
 
     public static String parse(String responseBody) {
@@ -90,6 +71,15 @@ public class TwitterController {
         for (int i = 0; i < data.length(); i++) {
             JSONObject tweet = data.getJSONObject(i);
             System.out.println(tweet.get("text"));
+        }
+
+//        System.out.println(jsonObject.getJSONObject("includes").getJSONArray("users");
+//                .getJSONObject(0).get("name"));
+        JSONArray users = jsonObject.getJSONObject("includes").getJSONArray("users");
+        for (int i = 0; i < users.length(); i++) {
+            JSONObject user = users.getJSONObject(i);
+            System.out.println(user.get("name"));
+            System.out.println(user.get("profile_image_url"));
         }
 
         return "done";
