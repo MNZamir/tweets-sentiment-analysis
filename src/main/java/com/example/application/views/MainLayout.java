@@ -67,60 +67,60 @@ public class MainLayout extends AppLayout {
     private H1 viewTitle;
 
     public MainLayout() {
-        setPrimarySection(Section.DRAWER);
-        addToNavbar(true, createHeaderContent());
-        addToDrawer(createDrawerContent());
+//        setPrimarySection(Section.DRAWER);
+//        addToNavbar(true, createHeaderContent());
+//        addToDrawer(createDrawerContent());
     }
 
     private Component createHeaderContent() {
-        DrawerToggle toggle = new DrawerToggle();
-        toggle.addClassNames("view-toggle");
-        toggle.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        toggle.getElement().setAttribute("aria-label", "Menu toggle");
+//        DrawerToggle toggle = new DrawerToggle();
+//        toggle.addClassNames("view-toggle");
+//        toggle.addThemeVariants(ButtonVariant./LUMO_CONTRAST);
+//        toggle.getElement().setAttribute("aria-label", "Menu toggle");
 
-        viewTitle = new H1();
-        viewTitle.addClassNames("view-title");
+        viewTitle = new H1("Tweets Sentiment Analysis");
+        viewTitle.addClassNames("view-title","items-center", "justify-between");
 
-        Header header = new Header(toggle, viewTitle);
+        Header header = new Header(viewTitle);
         header.addClassNames("view-header");
         return header;
     }
 
-    private Component createDrawerContent() {
-        H2 appName = new H2("Tweets Sentiment Analysis");
-        appName.addClassNames("app-name");
+//    private Component createDrawerContent() {
+//        H2 appName = new H2("Tweets Sentiment Analysis");
+//        appName.addClassNames("app-name");
+//
+//        com.vaadin.flow.component.html.Section section = new com.vaadin.flow.component.html.Section(appName,
+//                createNavigation(), createFooter());
+//        section.addClassNames("drawer-section");
+//        return section;
+//    }
 
-        com.vaadin.flow.component.html.Section section = new com.vaadin.flow.component.html.Section(appName,
-                createNavigation(), createFooter());
-        section.addClassNames("drawer-section");
-        return section;
-    }
+//    private Nav createNavigation() {
+//        Nav nav = new Nav();
+//        nav.addClassNames("menu-item-container");
+//        nav.getElement().setAttribute("aria-labelledby", "views");
+//
+//        // Wrap the links in a list; improves accessibility
+//        UnorderedList list = new UnorderedList();
+//        list.addClassNames("navigation-list");
+//        nav.add(list);
+//
+//        for (MenuItemInfo menuItem : createMenuItems()) {
+//            list.add(menuItem);
+//
+//        }
+//        return nav;
+//    }
 
-    private Nav createNavigation() {
-        Nav nav = new Nav();
-        nav.addClassNames("menu-item-container");
-        nav.getElement().setAttribute("aria-labelledby", "views");
-
-        // Wrap the links in a list; improves accessibility
-        UnorderedList list = new UnorderedList();
-        list.addClassNames("navigation-list");
-        nav.add(list);
-
-        for (MenuItemInfo menuItem : createMenuItems()) {
-            list.add(menuItem);
-
-        }
-        return nav;
-    }
-
-    private MenuItemInfo[] createMenuItems() {
-        return new MenuItemInfo[]{ //
-                new MenuItemInfo("Mainpage", "la la-th-list", MainpageView.class), //
-
-                new MenuItemInfo("About", "la la-file", AboutView.class), //
-
-        };
-    }
+//    private MenuItemInfo[] createMenuItems() {
+//        return new MenuItemInfo[]{ //
+//                new MenuItemInfo("Mainpage", "la la-th-list", MainpageView.class), //
+//
+//                new MenuItemInfo("About", "la la-file", AboutView.class), //
+//
+//        };
+//    }
 
     private Footer createFooter() {
         Footer layout = new Footer();
@@ -129,11 +129,11 @@ public class MainLayout extends AppLayout {
         return layout;
     }
 
-    @Override
-    protected void afterNavigation() {
-        super.afterNavigation();
-        viewTitle.setText(getCurrentPageTitle());
-    }
+//    @Override
+//    protected void afterNavigation() {
+//        super.afterNavigation();
+//        viewTitle.setText(getCurrentPageTitle());
+//    }
 
     private String getCurrentPageTitle() {
         PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
